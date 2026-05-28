@@ -15,13 +15,13 @@ import {
 
 // Tabela de horários de funcionamento por dia da semana
 const HORARIOS = [
-  { dia: 'Domingo',    abertura: '08:00', fechamento: '14:00' },
-  { dia: 'Segunda',   abertura: '08:00', fechamento: '18:00' },
-  { dia: 'Terça',     abertura: '08:00', fechamento: '18:00' },
-  { dia: 'Quarta',    abertura: '08:00', fechamento: '18:00' },
-  { dia: 'Quinta',    abertura: '08:00', fechamento: '18:00' },
-  { dia: 'Sexta',     abertura: '08:00', fechamento: '20:00' },
-  { dia: 'Sábado',    abertura: '08:00', fechamento: '20:00' },
+  { dia: 'Domingo', abertura: '08:00', fechamento: '14:00' },
+  { dia: 'Segunda', abertura: '08:00', fechamento: '18:00' },
+  { dia: 'Terça', abertura: '08:00', fechamento: '18:00' },
+  { dia: 'Quarta', abertura: '08:00', fechamento: '18:00' },
+  { dia: 'Quinta', abertura: '08:00', fechamento: '18:00' },
+  { dia: 'Sexta', abertura: '08:00', fechamento: '20:00' },
+  { dia: 'Sábado', abertura: '08:00', fechamento: '20:00' },
 ];
 
 // Verifica se o estabelecimento está aberto no momento atual
@@ -57,9 +57,9 @@ export default function Header() {
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.nomeEstabelecimento}>Cantina do Sabor</Text>
+          <Text style={styles.nomeEstabelecimento}>Creperia do BIG</Text>
           <Text style={styles.infoTexto}>📍 Rua das Flores, 420 — Centro</Text>
-          <Text style={styles.infoTexto}>📞 (18) 99999-0000</Text>
+          <Text style={styles.infoTexto}>📞 (14) 98129-1538</Text>
         </View>
 
         {/* Indicador Aberto / Fechado */}
