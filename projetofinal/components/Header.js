@@ -51,7 +51,7 @@ export default function Header() {
         <View style={styles.logoContainer}>
           {/* Logo do estabelecimento — substitua pelo arquivo em assets/logo.png */}
           <Image
-            source={{ uri: 'https://via.placeholder.com/70x70/C8A96E/FFFFFF?text=🍴' }}
+            source={require('../assets/logo.png')}
             style={styles.logo}
           />
         </View>

@@ -60,8 +60,8 @@ const CARDAPIO = [
   },
   {
     id: '8',
-    nome: 'Torta Alemã',
-    descricao: 'Torta alemã gelada, com creme de manteiga e biscoito champanhe',
+    nome: 'Torta Alem\u00e3',
+    descricao: 'Torta alem\u00e3 gelada, com creme de manteiga e biscoito champanhe',
     preco: 29.90,
     imagem: { uri: 'https://via.placeholder.com/220x160/70A8C8/1A1209?text=' },
   },
@@ -89,8 +89,8 @@ export default function HomeScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#1A1209" />
       <Header />
       <View style={styles.secaoCardapio}>
-        <Text style={styles.tituloCardapio}>Cardápio</Text>
-        <Text style={styles.subtituloCardapio}>{CARDAPIO.length} opções disponíveis</Text>
+        <Text style={styles.tituloCardapio}>{'Card\u00e1pio'}</Text>
+        <Text style={styles.subtituloCardapio}>{CARDAPIO.length} {'op\u00e7\u00f5es dispon\u00edveis'}</Text>
       </View>
     </>
   );
