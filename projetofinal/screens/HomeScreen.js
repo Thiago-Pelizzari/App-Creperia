@@ -14,70 +14,71 @@ const CARDAPIO = [
     nome: 'Crepe Tradicional',
     descricao: 'Massa fina e macia recheada com presunto e queijo.',
     preco: 14.90,
-    imagem: { uri: 'https://via.placeholder.com/220x160/C8A96E/1A1209?text=PF' },
+    imagem: require('../assets/crepetradicional.jpg'),
   },
   {
     id: '2',
     nome: 'Crepe de Frango com Catupiry',
     descricao: 'Crepe recheado com frango desfiado e catupiry',
     preco: 16.50,
-    imagem: { uri: 'https://via.placeholder.com/220x160/D4A060/1A1209?text=🍗' },
+    imagem: require('../assets/crepefrango.jpg'),
   },
   {
     id: '3',
     nome: 'Crepe de Carne',
     descricao: 'Crepe recheado com carne desfiada e molho de tomate.',
     preco: 18.50,
-    imagem: { uri: 'https://via.placeholder.com/220x160/B88A50/F5F0E8?text=🍝' },
+    imagem: require('../assets/crepecarne.jpg'),
   },
   {
     id: '4',
     nome: 'Crepe de Banana com Canela',
     descricao: 'Deliciosa combinação de banana fresca e canela polvilhada por cima.',
     preco: 15.90,
-    imagem: { uri: 'https://via.placeholder.com/220x160/8FB060/1A1209?text=🥗' },
+    imagem: require('../assets/bananacannela.jpg'),
   },
   {
     id: '5',
     nome: 'Crepe de Chocolate com Morango',
     descricao: 'Massa fina e macia recheada com chocolate e morango fresco.',
     preco: 17.50,
-    imagem: { uri: 'https://via.placeholder.com/220x160/C07040/F5F0E8?text=🍔' },
+    imagem: require('../assets/crepechocmorang.jpg'),
   },
   {
     id: '6',
     nome: 'Crepe Doce de Leite com Banana',
     descricao: 'Doce de leite cremoso com banana fresca.',
     preco: 17.00,
-    imagem: { uri: 'https://via.placeholder.com/220x160/D4856A/F5F0E8?text=🍲' },
+    imagem: require('../assets/crepebananadoce.jpg'),
   },
   {
     id: '7',
     nome: 'Crepe Doce de Sonho de Valsa',
     descricao: 'Massa fina e macia recheada com chocolate e bombom.',
     preco: 17.00,
-    imagem: { uri: 'https://via.placeholder.com/220x160/E8C870/1A1209?text=🍳' },
+    imagem: require('../assets/crepesonhodevalsa.jpg'),
   },
   {
     id: '8',
-    nome: 'Torta Alem\u00e3',
-    descricao: 'Torta alem\u00e3 gelada, com creme de manteiga e biscoito champanhe',
+    nome: 'Torta Alemã',
+    descricao: 'Torta alemã gelada, com creme de manteiga e biscoito champanhe',
     preco: 29.90,
-    imagem: { uri: 'https://via.placeholder.com/220x160/70A8C8/1A1209?text=' },
+    imagem: require('../assets/tortaalem.jpg'),
   },
   {
     id: '9',
     nome: 'Torta Holandesa',
     descricao: 'Torta holandesa gelada, com creme de manteiga e biscoito champanhe',
     preco: 29.90,
-    imagem: { uri: 'https://via.placeholder.com/220x160/E87060/F5F0E8?text=' },
+    imagem: require('../assets/tortaholandesa.jpg'),
   },
+
   {
     id: '10',
     nome: 'Brownie com Sorvete',
     descricao: 'Brownie de chocolate quente com sorvete de creme e calda',
     preco: 14.90,
-    imagem: { uri: 'https://via.placeholder.com/220x160/5A3020/F5F0E8?text=🍫' },
+    imagem: require('../assets/brownie.jpg'),
   },
 ];
 
@@ -89,8 +90,8 @@ export default function HomeScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#1A1209" />
       <Header />
       <View style={styles.secaoCardapio}>
-        <Text style={styles.tituloCardapio}>{'Card\u00e1pio'}</Text>
-        <Text style={styles.subtituloCardapio}>{CARDAPIO.length} {'op\u00e7\u00f5es dispon\u00edveis'}</Text>
+        <Text style={styles.tituloCardapio}>Cardápio</Text>
+        <Text style={styles.subtituloCardapio}>{CARDAPIO.length} opções disponíveis</Text>
       </View>
     </>
   );
