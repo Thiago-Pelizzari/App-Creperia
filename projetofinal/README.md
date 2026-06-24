@@ -1,7 +1,7 @@
 # projetofinal — Sistema de Pedidos
 
 ## Aluno
-> Preencha aqui seu nome completo
+> Thiago Petreca Pelizzari
 
 ## Descrição
 Aplicativo de pedidos para o estabelecimento **Cantina do Sabor**, desenvolvido em React Native com Expo.
