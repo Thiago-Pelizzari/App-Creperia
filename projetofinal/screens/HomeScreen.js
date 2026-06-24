@@ -82,7 +82,7 @@ const CARDAPIO = [
   },
 ];
 
-export default function HomeScreen() {
+export default function HomeScreen({ onAddToCart }) {
   // Cabeçalho da lista: header fixo + título da seção de cardápio
   const ListHeader = () => (
     <>
@@ -100,7 +100,9 @@ export default function HomeScreen() {
     <FlatList
       data={CARDAPIO}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <ProductCard produto={item} />}
+      renderItem={({ item }) => (
+        <ProductCard produto={item} onAddToCart={onAddToCart} />
+      )}
       ListHeaderComponent={ListHeader}
       ListFooterComponent={<View style={{ height: 16 }} />}
       style={styles.lista}

@@ -4,12 +4,16 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function ProductCard({ produto }) {
+export default function ProductCard({ produto, onAddToCart }) {
   // Controla feedback visual do botão ao pressionar
   const [pressionado, setPressionado] = useState(false);
 
   const handleAdicionar = () => {
-    // TODO: lógica do carrinho será implementada posteriormente
+    // Chama a função do carrinho passada pelo App
+    if (onAddToCart) {
+      onAddToCart(produto);
+    }
+    // Feedback visual temporário
     setPressionado(true);
     setTimeout(() => setPressionado(false), 800);
   };

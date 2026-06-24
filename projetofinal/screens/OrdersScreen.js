@@ -1,33 +1,141 @@
-// screens/OrdersScreen.js — Tela de pedidos (placeholder)
-// Layout reservado; a lógica do carrinho será implementada posteriormente
+// screens/OrdersScreen.js — Tela do carrinho de compras
+// Exibe os itens adicionados ao carrinho com controles de quantidade
 
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
 
-export default function OrdersScreen() {
+export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }) {
+  // Calcula o total do carrinho
+  const total = carrinho.reduce(
+    (acc, item) => acc + item.preco * item.quantidade,
+    0
+  );
+  const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+
+  // ── Renderiza cada item do carrinho ──
+  const renderItem = ({ item }) => (
+    <View style={styles.cardItem}>
+      {/* Imagem do produto */}
+      <Image source={item.imagem} style={styles.imagemItem} resizeMode="cover" />
+
+      {/* Info do produto */}
+      <View style={styles.infoItem}>
+        <View style={styles.infoTopo}>
+          <Text style={styles.nomeItem} numberOfLines={1}>{item.nome}</Text>
+          {/* Botão remover item completamente */}
+          <TouchableOpacity
+            onPress={() => onRemoveItem(item.id)}
+            style={styles.btnRemoverItem}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.btnRemoverTexto}>✕</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.precoUnitario}>
+          R$ {item.preco.toFixed(2)} cada
+        </Text>
+
+        {/* Controles de quantidade */}
+        <View style={styles.controleQuantidade}>
+          <View style={styles.botoesQtd}>
+            <TouchableOpacity
+              style={styles.btnQtd}
+              onPress={() => onRemove(item.id)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.btnQtdTexto}>−</Text>
+            </TouchableOpacity>
+
+            <View style={styles.qtdContainer}>
+              <Text style={styles.qtdTexto}>{item.quantidade}</Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.btnQtd}
+              onPress={() => onAdd(item)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.btnQtdTexto}>+</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.subtotalItem}>
+            R$ {(item.preco * item.quantidade).toFixed(2)}
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+
+  // ── Carrinho vazio ──
+  if (carrinho.length === 0) {
+    return (
+      <View style={styles.containerVazio}>
+        <StatusBar barStyle="dark-content" backgroundColor="#F5F0E8" />
+        <Text style={styles.iconeVazio}>🛒</Text>
+        <Text style={styles.tituloVazio}>Seu carrinho está vazio</Text>
+        <Text style={styles.subtituloVazio}>
+          Adicione itens do cardápio para{'\n'}
+          começar seu pedido!
+        </Text>
+      </View>
+    );
+  }
+
+  // ── Carrinho com itens ──
   return (
     <View style={styles.container}>
-      {/* Ícone e mensagem de placeholder */}
-      <Text style={styles.icone}>📋</Text>
-      <Text style={styles.titulo}>Meus Pedidos</Text>
-      <Text style={styles.subtitulo}>
-        A lógica do carrinho e histórico de pedidos{'\n'}
-        será implementada em breve.
-      </Text>
+      <StatusBar barStyle="dark-content" backgroundColor="#F5F0E8" />
 
-      {/* Caixas decorativas simulando cards de pedido */}
-      {[1, 2, 3].map((i) => (
-        <View key={i} style={styles.cardPlaceholder}>
-          <View style={styles.placeholderLinha} />
-          <View style={[styles.placeholderLinha, { width: '60%', opacity: 0.4 }]} />
+      {/* Header do carrinho */}
+      <View style={styles.headerCarrinho}>
+        <Text style={styles.tituloCarrinho}>🛒 Meu Carrinho</Text>
+        <Text style={styles.subtituloCarrinho}>
+          {totalItens} {totalItens === 1 ? 'item' : 'itens'}
+        </Text>
+      </View>
+
+      {/* Lista de itens */}
+      <FlatList
+        data={carrinho}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listaContent}
+      />
+
+      {/* Rodapé com total */}
+      <View style={styles.rodapeTotal}>
+        <View style={styles.linhaTotal}>
+          <Text style={styles.labelTotal}>Total</Text>
+          <Text style={styles.valorTotal}>R$ {total.toFixed(2)}</Text>
         </View>
-      ))}
+        <TouchableOpacity style={styles.btnFinalizar} activeOpacity={0.85}>
+          <Text style={styles.btnFinalizarTexto}>Finalizar Pedido</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // ── Container principal ──
   container: {
+    flex: 1,
+    backgroundColor: '#F5F0E8',
+  },
+
+  // ── Carrinho vazio ──
+  containerVazio: {
     flex: 1,
     backgroundColor: '#F5F0E8',
     alignItems: 'center',
@@ -35,37 +143,196 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     gap: 8,
   },
-  icone: {
-    fontSize: 48,
+  iconeVazio: {
+    fontSize: 56,
     marginBottom: 8,
   },
-  titulo: {
+  tituloVazio: {
     fontSize: 22,
     fontWeight: '800',
     color: '#1A1209',
     letterSpacing: 0.3,
   },
-  subtitulo: {
-    fontSize: 13,
+  subtituloVazio: {
+    fontSize: 14,
     color: '#7A6A55',
     textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 24,
+    lineHeight: 22,
   },
-  cardPlaceholder: {
-    width: '100%',
+
+  // ── Header do carrinho ──
+  headerCarrinho: {
+    paddingHorizontal: 20,
+    paddingTop: 56,
+    paddingBottom: 16,
+    backgroundColor: '#1A1209',
+    // Sombra
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  tituloCarrinho: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#F5F0E8',
+    letterSpacing: 0.3,
+  },
+  subtituloCarrinho: {
+    fontSize: 13,
+    color: '#A89070',
+    marginTop: 4,
+  },
+
+  // ── Lista ──
+  listaContent: {
+    paddingTop: 16,
+    paddingBottom: 8,
+  },
+
+  // ── Card de item do carrinho ──
+  cardItem: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    gap: 8,
+    borderRadius: 16,
+    marginHorizontal: 16,
+    marginBottom: 12,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    // Sombra
+    shadowColor: '#1A1209',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
     borderWidth: 1,
     borderColor: '#EDE8DF',
-    opacity: 0.6,
   },
-  placeholderLinha: {
-    height: 10,
-    backgroundColor: '#DDD6CC',
-    borderRadius: 5,
-    width: '85%',
+  imagemItem: {
+    width: 100,
+    height: 110,
+  },
+  infoItem: {
+    flex: 1,
+    padding: 12,
+    justifyContent: 'space-between',
+  },
+  infoTopo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  nomeItem: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#1A1209',
+    letterSpacing: 0.2,
+    flex: 1,
+    marginRight: 8,
+  },
+  btnRemoverItem: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#FEE2E2',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnRemoverTexto: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#EF4444',
+  },
+  precoUnitario: {
+    fontSize: 12,
+    color: '#7A6A55',
+    marginTop: 2,
+  },
+
+  // ── Controles de quantidade ──
+  controleQuantidade: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 8,
+  },
+  botoesQtd: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 0,
+  },
+  btnQtd: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: '#1A1209',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnQtdTexto: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#F5F0E8',
+  },
+  qtdContainer: {
+    width: 36,
+    alignItems: 'center',
+  },
+  qtdTexto: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#1A1209',
+  },
+  subtotalItem: {
+    fontSize: 17,
+    fontWeight: '800',
+    color: '#C8A96E',
+    letterSpacing: 0.3,
+  },
+
+  // ── Rodapé com total ──
+  rodapeTotal: {
+    backgroundColor: '#1A1209',
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 32,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    // Sombra para cima
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 10,
+  },
+  linhaTotal: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  labelTotal: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#A89070',
+    letterSpacing: 0.3,
+  },
+  valorTotal: {
+    fontSize: 26,
+    fontWeight: '800',
+    color: '#C8A96E',
+    letterSpacing: 0.5,
+  },
+  btnFinalizar: {
+    backgroundColor: '#C8A96E',
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: 'center',
+  },
+  btnFinalizarTexto: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#1A1209',
+    letterSpacing: 0.5,
   },
 });

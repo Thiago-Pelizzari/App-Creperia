@@ -1,5 +1,6 @@
 // components/FooterNav.js — Barra de navegação fixa na parte inferior
 // Contém três abas: Home, Pedidos e Perfil
+// Exibe badge com quantidade de itens no carrinho na aba Pedidos
 
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
@@ -7,15 +8,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // Definição dos itens do footer
 const ITENS_NAV = [
   { id: 'home',    icone: '🏠', label: 'Início'   },
-  { id: 'orders',  icone: '📋', label: 'Pedidos'  },
+  { id: 'orders',  icone: '🛒', label: 'Carrinho' },
   { id: 'profile', icone: '👤', label: 'Perfil'   },
 ];
 
-export default function FooterNav({ activeScreen, onNavigate }) {
+export default function FooterNav({ activeScreen, onNavigate, cartCount = 0 }) {
   return (
     <View style={styles.footer}>
       {ITENS_NAV.map((item) => {
         const ativo = activeScreen === item.id;
+        const mostrarBadge = item.id === 'orders' && cartCount > 0;
+
         return (
           <TouchableOpacity
             key={item.id}
@@ -26,9 +29,22 @@ export default function FooterNav({ activeScreen, onNavigate }) {
             {/* Indicador de aba ativa */}
             {ativo && <View style={styles.indicador} />}
 
-            <Text style={[styles.icone, ativo && styles.iconeAtivo]}>
-              {item.icone}
-            </Text>
+            {/* Container do ícone com badge */}
+            <View style={styles.iconeContainer}>
+              <Text style={[styles.icone, ativo && styles.iconeAtivo]}>
+                {item.icone}
+              </Text>
+
+              {/* Badge com contagem de itens */}
+              {mostrarBadge && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeTexto}>
+                    {cartCount > 99 ? '99+' : cartCount}
+                  </Text>
+                </View>
+              )}
+            </View>
+
             <Text style={[styles.label, ativo && styles.labelAtivo]}>
               {item.label}
             </Text>
@@ -71,6 +87,9 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
 
+  iconeContainer: {
+    position: 'relative',
+  },
   icone: {
     fontSize: 22,
     opacity: 0.45,
@@ -78,6 +97,28 @@ const styles = StyleSheet.create({
   iconeAtivo: {
     opacity: 1,
   },
+
+  // ── Badge do carrinho ──
+  badge: {
+    position: 'absolute',
+    top: -6,
+    right: -12,
+    backgroundColor: '#EF4444',
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+    borderWidth: 2,
+    borderColor: '#1A1209',
+  },
+  badgeTexto: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+
   label: {
     fontSize: 10,
     color: '#A89070',
