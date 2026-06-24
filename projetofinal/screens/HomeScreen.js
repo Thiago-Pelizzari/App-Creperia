@@ -35,7 +35,7 @@ const CARDAPIO = [
     nome: 'Crepe de Banana com Canela',
     descricao: 'Deliciosa combinação de banana fresca e canela polvilhada por cima.',
     preco: 15.90,
-    imagem: require('../assets/bananacannela.jpg'),
+    imagem: require('../assets/crepebananacreme.jpg'),
   },
   {
     id: '5',

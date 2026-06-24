@@ -1,5 +1,4 @@
-// screens/OrdersScreen.js — Tela do carrinho de compras
-// Exibe os itens adicionados ao carrinho com controles de quantidade
+// Tela do Carrinho
 
 import React from 'react';
 import {
@@ -13,24 +12,24 @@ import {
 } from 'react-native';
 
 export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }) {
-  // Calcula o total do carrinho
+  // Calcula o valor total
   const total = carrinho.reduce(
     (acc, item) => acc + item.preco * item.quantidade,
     0
   );
   const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
 
-  // ── Renderiza cada item do carrinho ──
+  // Desenha o item no carrinho
   const renderItem = ({ item }) => (
     <View style={styles.cardItem}>
-      {/* Imagem do produto */}
+      {/* Imagem */}
       <Image source={item.imagem} style={styles.imagemItem} resizeMode="cover" />
 
-      {/* Info do produto */}
+      {/* Detalhes do item */}
       <View style={styles.infoItem}>
         <View style={styles.infoTopo}>
           <Text style={styles.nomeItem} numberOfLines={1}>{item.nome}</Text>
-          {/* Botão remover item completamente */}
+          {/* Excluir item */}
           <TouchableOpacity
             onPress={() => onRemoveItem(item.id)}
             style={styles.btnRemoverItem}
@@ -44,7 +43,7 @@ export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }
           R$ {item.preco.toFixed(2)} cada
         </Text>
 
-        {/* Controles de quantidade */}
+        {/* Botões de quantidade */}
         <View style={styles.controleQuantidade}>
           <View style={styles.botoesQtd}>
             <TouchableOpacity
@@ -76,7 +75,7 @@ export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }
     </View>
   );
 
-  // ── Carrinho vazio ──
+  // Tela se o carrinho estiver vazio
   if (carrinho.length === 0) {
     return (
       <View style={styles.containerVazio}>
@@ -91,12 +90,12 @@ export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }
     );
   }
 
-  // ── Carrinho com itens ──
+  // Tela do carrinho com produtos
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F5F0E8" />
 
-      {/* Header do carrinho */}
+      {/* Cabeçalho */}
       <View style={styles.headerCarrinho}>
         <Text style={styles.tituloCarrinho}>🛒 Meu Carrinho</Text>
         <Text style={styles.subtituloCarrinho}>
@@ -104,7 +103,7 @@ export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }
         </Text>
       </View>
 
-      {/* Lista de itens */}
+      {/* Lista de produtos */}
       <FlatList
         data={carrinho}
         keyExtractor={(item) => item.id}
@@ -113,7 +112,7 @@ export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }
         contentContainerStyle={styles.listaContent}
       />
 
-      {/* Rodapé com total */}
+      {/* Rodapé com o total */}
       <View style={styles.rodapeTotal}>
         <View style={styles.linhaTotal}>
           <Text style={styles.labelTotal}>Total</Text>
@@ -128,13 +127,10 @@ export default function OrdersScreen({ carrinho, onAdd, onRemove, onRemoveItem }
 }
 
 const styles = StyleSheet.create({
-  // ── Container principal ──
   container: {
     flex: 1,
     backgroundColor: '#F5F0E8',
   },
-
-  // ── Carrinho vazio ──
   containerVazio: {
     flex: 1,
     backgroundColor: '#F5F0E8',
@@ -159,14 +155,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
   },
-
-  // ── Header do carrinho ──
   headerCarrinho: {
     paddingHorizontal: 20,
     paddingTop: 56,
     paddingBottom: 16,
     backgroundColor: '#1A1209',
-    // Sombra
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
@@ -184,14 +177,10 @@ const styles = StyleSheet.create({
     color: '#A89070',
     marginTop: 4,
   },
-
-  // ── Lista ──
   listaContent: {
     paddingTop: 16,
     paddingBottom: 8,
   },
-
-  // ── Card de item do carrinho ──
   cardItem: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
@@ -199,7 +188,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     overflow: 'hidden',
     flexDirection: 'row',
-    // Sombra
     shadowColor: '#1A1209',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
@@ -248,8 +236,6 @@ const styles = StyleSheet.create({
     color: '#7A6A55',
     marginTop: 2,
   },
-
-  // ── Controles de quantidade ──
   controleQuantidade: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -289,8 +275,6 @@ const styles = StyleSheet.create({
     color: '#C8A96E',
     letterSpacing: 0.3,
   },
-
-  // ── Rodapé com total ──
   rodapeTotal: {
     backgroundColor: '#1A1209',
     paddingHorizontal: 20,
@@ -298,7 +282,6 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // Sombra para cima
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.2,

@@ -1,6 +1,4 @@
-// App.js — Ponto de entrada principal do aplicativo
-// Configura a navegação entre as telas: Home, Pedidos e Perfil
-// Gerencia o estado global do carrinho de compras
+// App.js - Arquivo principal do aplicativo
 
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
@@ -10,18 +8,18 @@ import ProfileScreen from './screens/ProfileScreen';
 import FooterNav from './components/FooterNav';
 
 export default function App() {
-  // Controla qual tela está ativa no momento
+  // Tela ativa
   const [activeScreen, setActiveScreen] = useState('home');
 
-  // Estado global do carrinho: array de { ...produto, quantidade }
+  // Carrinho de compras
   const [carrinho, setCarrinho] = useState([]);
 
-  // Adiciona um produto ao carrinho (incrementa quantidade se já existir)
+  // Adicionar item ao carrinho
   const adicionarAoCarrinho = (produto) => {
     setCarrinho((prev) => {
       const index = prev.findIndex((item) => item.id === produto.id);
       if (index >= 0) {
-        // Produto já existe — incrementa quantidade
+        // Se já existe, aumenta a quantidade
         const atualizado = [...prev];
         atualizado[index] = {
           ...atualizado[index],
@@ -29,12 +27,12 @@ export default function App() {
         };
         return atualizado;
       }
-      // Produto novo — adiciona com quantidade 1
+      // Se é novo, adiciona com quantidade 1
       return [...prev, { ...produto, quantidade: 1 }];
     });
   };
 
-  // Remove uma unidade do produto (remove do carrinho se quantidade chegar a 0)
+  // Remover uma unidade do carrinho
   const removerDoCarrinho = (produtoId) => {
     setCarrinho((prev) => {
       const index = prev.findIndex((item) => item.id === produtoId);
@@ -42,10 +40,10 @@ export default function App() {
 
       const item = prev[index];
       if (item.quantidade <= 1) {
-        // Remove completamente do carrinho
+        // Se a quantidade for 1, remove o item
         return prev.filter((_, i) => i !== index);
       }
-      // Decrementa quantidade
+      // Senão, diminui a quantidade
       const atualizado = [...prev];
       atualizado[index] = {
         ...atualizado[index],
@@ -55,12 +53,12 @@ export default function App() {
     });
   };
 
-  // Remove o produto inteiro do carrinho independente da quantidade
+  // Excluir item do carrinho
   const removerItemCompleto = (produtoId) => {
     setCarrinho((prev) => prev.filter((item) => item.id !== produtoId));
   };
 
-  // Renderiza a tela correspondente à aba ativa
+  // Mostra a tela selecionada
   const renderScreen = () => {
     switch (activeScreen) {
       case 'home':
@@ -81,17 +79,17 @@ export default function App() {
     }
   };
 
-  // Calcula total de itens no carrinho para o badge
+  // Total de itens no carrinho
   const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
 
   return (
     <View style={styles.container}>
-      {/* Área principal de conteúdo */}
+      {/* Conteúdo da tela */}
       <View style={styles.content}>
         {renderScreen()}
       </View>
 
-      {/* Footer fixo na parte inferior */}
+      {/* Menu inferior */}
       <FooterNav
         activeScreen={activeScreen}
         onNavigate={setActiveScreen}

@@ -1,19 +1,18 @@
-// components/ProductCard.js — Card reutilizável de produto do cardápio
-// Exibe imagem, nome, descrição, preço e botão "Adicionar ao carrinho"
+// Card do Produto
 
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function ProductCard({ produto, onAddToCart }) {
-  // Controla feedback visual do botão ao pressionar
+  // Estado do botão de adicionar
   const [pressionado, setPressionado] = useState(false);
 
   const handleAdicionar = () => {
-    // Chama a função do carrinho passada pelo App
+    // Chama função para adicionar ao carrinho
     if (onAddToCart) {
       onAddToCart(produto);
     }
-    // Feedback visual temporário
+    // Efeito temporário no botão
     setPressionado(true);
     setTimeout(() => setPressionado(false), 800);
   };
@@ -23,12 +22,12 @@ export default function ProductCard({ produto, onAddToCart }) {
       {/* Imagem do produto */}
       <Image source={produto.imagem} style={styles.imagem} resizeMode="cover" />
 
-      {/* Informações do produto */}
+      {/* Dados do produto */}
       <View style={styles.info}>
         <Text style={styles.nome} numberOfLines={1}>{produto.nome}</Text>
         <Text style={styles.descricao} numberOfLines={2}>{produto.descricao}</Text>
 
-        {/* Rodapé do card: preço + botão */}
+        {/* Preço e Botão */}
         <View style={styles.rodape}>
           <Text style={styles.preco}>R$ {produto.preco.toFixed(2)}</Text>
 
@@ -55,7 +54,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     overflow: 'hidden',
     flexDirection: 'row',
-    // Sombra do card
     shadowColor: '#1A1209',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
@@ -64,14 +62,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EDE8DF',
   },
-
-  // ── Imagem ──
   imagem: {
     width: 110,
     height: 110,
   },
-
-  // ── Informações ──
   info: {
     flex: 1,
     padding: 12,
@@ -89,8 +83,6 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     marginTop: 3,
   },
-
-  // ── Rodapé: preço + botão ──
   rodape: {
     flexDirection: 'row',
     alignItems: 'center',

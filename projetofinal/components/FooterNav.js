@@ -1,11 +1,9 @@
-// components/FooterNav.js — Barra de navegação fixa na parte inferior
-// Contém três abas: Home, Pedidos e Perfil
-// Exibe badge com quantidade de itens no carrinho na aba Pedidos
+// Barra de navegação
 
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-// Definição dos itens do footer
+// Itens do menu
 const ITENS_NAV = [
   { id: 'home',    icone: '🏠', label: 'Início'   },
   { id: 'orders',  icone: '🛒', label: 'Carrinho' },
@@ -26,16 +24,16 @@ export default function FooterNav({ activeScreen, onNavigate, cartCount = 0 }) {
             onPress={() => onNavigate(item.id)}
             activeOpacity={0.7}
           >
-            {/* Indicador de aba ativa */}
+            {/* Indicador da tela ativa */}
             {ativo && <View style={styles.indicador} />}
 
-            {/* Container do ícone com badge */}
+            {/* Área do ícone */}
             <View style={styles.iconeContainer}>
               <Text style={[styles.icone, ativo && styles.iconeAtivo]}>
                 {item.icone}
               </Text>
 
-              {/* Badge com contagem de itens */}
+              {/* Contador do carrinho */}
               {mostrarBadge && (
                 <View style={styles.badge}>
                   <Text style={styles.badgeTexto}>
@@ -59,11 +57,10 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     backgroundColor: '#1A1209',
-    paddingBottom: 24, // espaço para home indicator (iOS)
+    paddingBottom: 24,
     paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: '#3D2B12',
-    // Sombra para destacar o footer
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -3 },
     shadowOpacity: 0.2,
@@ -76,8 +73,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingTop: 4,
   },
-
-  // Linha dourada na aba ativa
   indicador: {
     position: 'absolute',
     top: -10,
@@ -86,7 +81,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#C8A96E',
     borderRadius: 2,
   },
-
   iconeContainer: {
     position: 'relative',
   },
@@ -97,8 +91,6 @@ const styles = StyleSheet.create({
   iconeAtivo: {
     opacity: 1,
   },
-
-  // ── Badge do carrinho ──
   badge: {
     position: 'absolute',
     top: -6,
@@ -118,7 +110,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#FFFFFF',
   },
-
   label: {
     fontSize: 10,
     color: '#A89070',
